@@ -1,0 +1,113 @@
+[
+  {
+    "station_id": "HYD001",
+    "station_name": "Bharat Charge EV Charging Station",
+    "city": "Hyderabad",
+    "area": "Hyder Nagar / RamNaresh Nagar",
+    "address": "Hyder Nagar, RamNaresh Nagar, Hyderabad, Telangana",
+    "latitude": 17.5365276,
+    "longitude": 78.3930837,
+    "operator": "Bharat Charge",
+    "contact_number": "8977245381; 9704479600",
+    "charging_points": 4,
+    "max_power_kw": 240,
+    "connectors": [
+      "CCS Type 2",
+      "Other connectors listed; verify"
+    ],
+    "price_per_kwh_inr": 17.99,
+    "availability": "Unknown",
+    "source_url": "https://www.openchargemap.org/poi/details/149524",
+    "last_verified": null,
+    "verification_status": "Needs Verification",
+    "notes": "Public directory listing. Verify current operation, contact numbers, connectors, charging-point count, and price before publishing."
+  },
+  {
+    "station_id": "HYD002",
+    "station_name": "Bharat Charge 240 kW EV Charging Station",
+    "city": "Hyderabad",
+    "area": "Pragathi Nagar / Lahari Estates",
+    "address": "Pragathi Nagar, Lahari Estates area, Hyderabad, Telangana",
+    "latitude": 17.5364089863,
+    "longitude": 78.393054721,
+    "operator": "Bharat Charge",
+    "contact_number": "8977245381",
+    "charging_points": 7,
+    "max_power_kw": 240,
+    "connectors": [
+      "Not verified"
+    ],
+    "price_per_kwh_inr": 17.99,
+    "availability": "Unknown",
+    "source_url": "https://openchargemap.org/poi/details/498735",
+    "last_verified": null,
+    "verification_status": "Needs Verification",
+    "notes": "Coordinates are very close to HYD001; may be a duplicate or a nearby separate listing. Confirm before treating as a distinct station. Verify all specifications and contact details."
+  },
+  {
+    "station_id": "HYD003",
+    "station_name": "SASS EV Charging Station",
+    "city": "Hyderabad",
+    "area": "Nallagandla",
+    "address": "HUDA Layout, Plot 111D, Nallagandla, Hyderabad, Telangana",
+    "latitude": null,
+    "longitude": null,
+    "operator": "SASS",
+    "contact_number": null,
+    "charging_points": null,
+    "max_power_kw": 60,
+    "connectors": [
+      "CCS Type 2 (listed; verify)"
+    ],
+    "price_per_kwh_inr": null,
+    "availability": "Unknown",
+    "source_url": "https://chargingstationsmap.net/free-ev-charging-stations/hyderabad",
+    "last_verified": null,
+    "verification_status": "Needs Verification",
+    "notes": "Public directory listing. Coordinates, contact number, charging-point count, price, and current operation need verification."
+  },
+  {
+    "station_id": "HYD004",
+    "station_name": "Tellus Power",
+    "city": "Hyderabad",
+    "area": "Banjara Hills",
+    "address": "Gamut De Lousa, Banjara Hills, Hyderabad, Telangana",
+    "latitude": 17.41336,
+    "longitude": 78.4266,
+    "operator": "Tellus Power",
+    "contact_number": null,
+    "charging_points": 1,
+    "max_power_kw": 7.2,
+    "connectors": [
+      "Type 1 (J1772; listed, verify)"
+    ],
+    "price_per_kwh_inr": null,
+    "availability": "Unknown",
+    "source_url": "https://plugbeacon.com/chargers/telangana/hyderabad",
+    "last_verified": null,
+    "verification_status": "Needs Verification",
+    "notes": "Public directory listing. Verify location, connector, power, charging-point count, and whether the station is public and operational."
+  },
+  {
+    "station_id": "HYD005",
+    "station_name": "Fortum Mahindra",
+    "city": "Hyderabad",
+    "area": "Attapur / Maruthi Nagar",
+    "address": "Attapur, Maruthi Nagar area, Hyderabad, Telangana",
+    "latitude": 17.36334,
+    "longitude": 78.4337,
+    "operator": "Fortum Mahindra",
+    "contact_number": null,
+    "charging_points": null,
+    "max_power_kw": null,
+    "connectors": [
+      "Not verified"
+    ],
+    "price_per_kwh_inr": null,
+    "availability": "Unknown",
+    "source_url": "https://plugbeacon.com/chargers/telangana/hyderabad",
+    "last_verified": null,
+    "verification_status": "Needs Verification",
+    "notes": "Public directory listing. Verify exact address, operator, contact, charging specifications, and current operation."
+  }
+]
