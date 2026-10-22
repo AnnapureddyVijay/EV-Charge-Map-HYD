@@ -4,15 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EV Charge Map Hyderabad</title>
-  <meta name="description" content="Find EV charging station listings across Hyderabad.">
+  <meta name="description" content="Find EV charging stations across Hyderabad.">
 
-  <link rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -27,29 +24,12 @@
       color: white;
     }
 
-    header h1 {
-      margin: 0 0 8px;
-      font-size: 28px;
-    }
+    header h1 { margin: 0 0 8px; font-size: 28px; }
+    header p { margin: 0; color: #d5e9df; }
 
-    header p {
-      margin: 0;
-      color: #d5e9df;
-    }
-
-    .hero {
-      padding: 24px 5%;
-      background: #e5f5ec;
-    }
-
-    .hero h2 {
-      margin: 0 0 8px;
-    }
-
-    .hero p {
-      margin: 0;
-      line-height: 1.6;
-    }
+    .hero { padding: 24px 5%; background: #e5f5ec; }
+    .hero h2 { margin: 0 0 8px; }
+    .hero p { margin: 0; line-height: 1.6; }
 
     .filters {
       display: flex;
@@ -58,8 +38,7 @@
       padding: 18px 5%;
     }
 
-    input,
-    select {
+    input, select {
       flex: 1;
       min-width: 180px;
       padding: 12px;
@@ -69,10 +48,7 @@
       font-size: 15px;
     }
 
-    .summary {
-      padding: 0 5% 16px;
-      color: #53665e;
-    }
+    .summary { padding: 0 5% 16px; color: #53665e; }
 
     main {
       display: grid;
@@ -89,10 +65,7 @@
       z-index: 1;
     }
 
-    #stationList {
-      display: grid;
-      gap: 12px;
-    }
+    #stationList { display: grid; gap: 12px; }
 
     .station {
       background: white;
@@ -103,15 +76,8 @@
       overflow-wrap: anywhere;
     }
 
-    .station h3 {
-      margin: 0 0 8px;
-    }
-
-    .station p {
-      margin: 7px 0;
-      color: #52635b;
-      line-height: 1.45;
-    }
+    .station h3 { margin: 0 0 8px; }
+    .station p { margin: 7px 0; color: #52635b; line-height: 1.45; }
 
     .power {
       display: inline-block;
@@ -124,9 +90,7 @@
       margin-bottom: 7px;
     }
 
-    .station a {
-      color: #126b49;
-    }
+    .station a { color: #126b49; }
 
     .notice {
       padding: 12px;
@@ -145,23 +109,14 @@
     }
 
     @media (max-width: 800px) {
-      main {
-        grid-template-columns: 1fr;
-      }
-
-      #map {
-        height: 380px;
-      }
-
-      header h1 {
-        font-size: 23px;
-      }
+      main { grid-template-columns: 1fr; }
+      #map { height: 380px; }
+      header h1 { font-size: 23px; }
     }
   </style>
 </head>
 
 <body>
-
   <header>
     <h1>⚡ EV Charge Map Hyderabad</h1>
     <p>Find EV charging stations. Plan your next charge.</p>
@@ -169,19 +124,13 @@
 
   <section class="hero">
     <h2>Charge smarter. Drive farther.</h2>
-    <p>
-      Explore charging locations around Hyderabad and check
-      station details before you travel.
-    </p>
+    <p>Explore charging locations around Hyderabad and check station details before you travel.</p>
   </section>
 
   <section class="filters">
-    <input
-      id="search"
-      type="search"
+    <input id="search" type="search"
       placeholder="Search station, area or operator..."
-      aria-label="Search stations"
-    >
+      aria-label="Search stations">
 
     <select id="powerFilter" aria-label="Filter by charging power">
       <option value="all">All power levels</option>
@@ -218,7 +167,6 @@
     }).addTo(map);
 
     const markersLayer = L.layerGroup().addTo(map);
-
     let stations = [];
 
     const searchInput = document.getElementById('search');
@@ -227,9 +175,7 @@
     const summary = document.getElementById('summary');
 
     function showValue(value, fallback = 'Not verified') {
-      return value !== null &&
-             value !== undefined &&
-             value !== ''
+      return value !== null && value !== undefined && value !== ''
         ? String(value)
         : fallback;
     }
@@ -250,19 +196,15 @@
         station.longitude == null ||
         station.latitude === '' ||
         station.longitude === ''
-      ) {
-        return false;
-      }
+      ) return false;
 
       const lat = Number(station.latitude);
       const lon = Number(station.longitude);
 
       return Number.isFinite(lat) &&
-             Number.isFinite(lon) &&
-             lat >= -90 &&
-             lat <= 90 &&
-             lon >= -180 &&
-             lon <= 180;
+        Number.isFinite(lon) &&
+        lat >= -90 && lat <= 90 &&
+        lon >= -180 && lon <= 180;
     }
 
     function renderStations() {
@@ -276,20 +218,16 @@
           station.address,
           station.operator,
           station.city
-        ]
-          .map(value => String(value ?? ''))
-          .join(' ')
-          .toLowerCase();
+        ].map(value => String(value ?? ''))
+         .join(' ')
+         .toLowerCase();
 
         const power = Number(station.max_power_kw);
-
-        const hasPower =
-          station.max_power_kw != null &&
+        const hasPower = station.max_power_kw != null &&
           station.max_power_kw !== '' &&
           Number.isFinite(power);
 
-        const matchesPower =
-          filter === 'all' ||
+        const matchesPower = filter === 'all' ||
           (filter === 'slow' && hasPower && power <= 22) ||
           (filter === 'fast' && hasPower && power > 22);
 
@@ -303,9 +241,7 @@
 
       filtered.forEach(station => {
         const power = Number(station.max_power_kw);
-
-        const hasPower =
-          station.max_power_kw != null &&
+        const hasPower = station.max_power_kw != null &&
           station.max_power_kw !== '' &&
           Number.isFinite(power);
 
@@ -313,13 +249,10 @@
           ? station.connectors
           : [];
 
-        const contact = station.contact_number || 'Not listed';
-
-        const sourceURL =
-          typeof station.source_url === 'string' &&
+        const sourceURL = typeof station.source_url === 'string' &&
           /^https?:\/\//i.test(station.source_url)
-            ? station.source_url
-            : '';
+          ? station.source_url
+          : '';
 
         const card = document.createElement('article');
         card.className = 'station';
@@ -346,11 +279,9 @@
           </p>
 
           <p><strong>Connectors:</strong>
-            ${escapeHTML(
-              connectors.length
-                ? connectors.join(', ')
-                : 'Not verified'
-            )}
+            ${escapeHTML(connectors.length
+              ? connectors.join(', ')
+              : 'Not verified')}
           </p>
 
           <p><strong>Charging points:</strong>
@@ -362,16 +293,14 @@
           </p>
 
           <p><strong>Price:</strong>
-            ${
-              station.price_per_kwh_inr != null &&
+            ${station.price_per_kwh_inr != null &&
               station.price_per_kwh_inr !== ''
-                ? '₹' + escapeHTML(station.price_per_kwh_inr) + '/kWh'
-                : 'Not verified'
-            }
+              ? '₹' + escapeHTML(station.price_per_kwh_inr) + '/kWh'
+              : 'Not verified'}
           </p>
 
           <p><strong>Contact:</strong>
-            ${escapeHTML(contact)}
+            ${escapeHTML(showValue(station.contact_number, 'Not listed'))}
           </p>
 
           <p><strong>Availability:</strong>
@@ -382,13 +311,11 @@
             ${escapeHTML(showValue(station.verification_status))}
           </p>
 
-          ${
-            sourceURL
-              ? `<p><a href="${escapeHTML(sourceURL)}"
-                    target="_blank"
-                    rel="noopener noreferrer">View source listing ↗</a></p>`
-              : ''
-          }
+          ${sourceURL
+            ? `<p><a href="${escapeHTML(sourceURL)}"
+                 target="_blank" rel="noopener noreferrer">
+                 View source listing ↗</a></p>`
+            : ''}
 
           <p class="notice">
             Confirm station details with the operator before travelling.
@@ -405,9 +332,7 @@
           ]).bindPopup(
             `<strong>${escapeHTML(showValue(station.station_name))}</strong><br>` +
             `${escapeHTML(showValue(station.area))}<br>` +
-            `${hasPower
-              ? escapeHTML(power + ' kW')
-              : 'Power not verified'}`
+            `${hasPower ? escapeHTML(power + ' kW') : 'Power not verified'}`
           );
 
           marker.addTo(markersLayer);
@@ -424,8 +349,7 @@
           <article class="station">
             <h3>No matching stations</h3>
             <p>Try a different search or power filter.</p>
-          </article>
-        `;
+          </article>`;
       }
     }
 
@@ -434,7 +358,6 @@
         if (!response.ok) {
           throw new Error('Could not load stations.json');
         }
-
         return response.json();
       })
       .then(data => {
@@ -465,13 +388,10 @@
         stationList.innerHTML = `
           <article class="station">
             <h3>Could not load station data</h3>
-            <p>
-              Check that <strong>stations.json</strong> is committed
-              to the same repository folder as <strong>index.html</strong>.
-            </p>
-            <p>Also confirm that the JSON file contains a valid JSON array.</p>
-          </article>
-        `;
+            <p>Ensure <strong>stations.json</strong> and
+            <strong>index.html</strong> are in the same repository folder.</p>
+            <p>Check that stations.json contains valid JSON.</p>
+          </article>`;
 
         console.error(error);
       });
@@ -479,6 +399,5 @@
     searchInput.addEventListener('input', renderStations);
     powerFilter.addEventListener('change', renderStations);
   </script>
-
 </body>
 </html>
