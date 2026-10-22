@@ -1,38 +1,167 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EV Charge Map Hyderabad</title>
-  <meta name="description" content="Find EV charging stations across Hyderabad.">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <meta name="description" content="Find EV charging station listings across Hyderabad.">
+
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
   <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: Arial, sans-serif; background: #f4f7f6; color: #172b25; }
-    header { padding: 24px 5%; background: #103d32; color: white; }
-    header h1 { margin: 0 0 8px; font-size: 28px; }
-    header p { margin: 0; color: #d5e9df; }
-    .hero { padding: 24px 5%; background: #e5f5ec; }
-    .hero h2 { margin: 0 0 8px; }
-    .hero p { margin: 0; line-height: 1.6; }
-    .filters { display: flex; flex-wrap: wrap; gap: 10px; padding: 18px 5%; }
-    input, select { flex: 1; min-width: 180px; padding: 12px; border: 1px solid #cbd8d1; border-radius: 8px; background: white; font-size: 15px; }
-    .summary { padding: 0 5% 16px; color: #53665e; }
-    main { display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; padding: 0 5% 30px; align-items: start; }
-    #map { height: 540px; border-radius: 12px; border: 1px solid #d7e1dc; z-index: 1; }
-    #stationList { display: grid; gap: 12px; }
-    .station { background: white; border: 1px solid #e0e8e3; border-radius: 12px; padding: 17px; box-shadow: 0 3px 12px #163d3210; overflow-wrap: anywhere; }
-    .station h3 { margin: 0 0 8px; }
-    .station p { margin: 7px 0; color: #52635b; line-height: 1.45; }
-    .power { display: inline-block; background: #dff5e7; color: #17643c; padding: 5px 9px; border-radius: 20px; font-weight: bold; font-size: 13px; margin-bottom: 7px; }
-    .station a { color: #126b49; }
-    .notice { padding: 12px; background: #fff6df; border-radius: 8px; color: #75551b !important; font-size: 13px; }
-    footer { padding: 22px 5%; background: #103d32; color: #e0eee7; font-size: 13px; line-height: 1.6; }
-    @media (max-width: 800px) { main { grid-template-columns: 1fr; } #map { height: 380px; } header h1 { font-size: 23px; } }
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7f6;
+      color: #172b25;
+    }
+
+    header {
+      padding: 24px 5%;
+      background: #103d32;
+      color: white;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    header p {
+      margin: 0;
+      color: #d5e9df;
+    }
+
+    .hero {
+      padding: 24px 5%;
+      background: #e5f5ec;
+    }
+
+    .hero h2 {
+      margin: 0 0 8px;
+    }
+
+    .hero p {
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 18px 5%;
+    }
+
+    input,
+    select {
+      flex: 1;
+      min-width: 180px;
+      padding: 12px;
+      border: 1px solid #cbd8d1;
+      border-radius: 8px;
+      background: white;
+      font-size: 15px;
+    }
+
+    .summary {
+      padding: 0 5% 16px;
+      color: #53665e;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 20px;
+      padding: 0 5% 30px;
+      align-items: start;
+    }
+
+    #map {
+      height: 540px;
+      border-radius: 12px;
+      border: 1px solid #d7e1dc;
+      z-index: 1;
+    }
+
+    #stationList {
+      display: grid;
+      gap: 12px;
+    }
+
+    .station {
+      background: white;
+      border: 1px solid #e0e8e3;
+      border-radius: 12px;
+      padding: 17px;
+      box-shadow: 0 3px 12px #163d3210;
+      overflow-wrap: anywhere;
+    }
+
+    .station h3 {
+      margin: 0 0 8px;
+    }
+
+    .station p {
+      margin: 7px 0;
+      color: #52635b;
+      line-height: 1.45;
+    }
+
+    .power {
+      display: inline-block;
+      background: #dff5e7;
+      color: #17643c;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .station a {
+      color: #126b49;
+    }
+
+    .notice {
+      padding: 12px;
+      background: #fff6df;
+      border-radius: 8px;
+      color: #75551b !important;
+      font-size: 13px;
+    }
+
+    footer {
+      padding: 22px 5%;
+      background: #103d32;
+      color: #e0eee7;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 800px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      #map {
+        height: 380px;
+      }
+
+      header h1 {
+        font-size: 23px;
+      }
+    }
   </style>
 </head>
+
 <body>
+
   <header>
     <h1>⚡ EV Charge Map Hyderabad</h1>
     <p>Find EV charging stations. Plan your next charge.</p>
@@ -40,11 +169,20 @@
 
   <section class="hero">
     <h2>Charge smarter. Drive farther.</h2>
-    <p>Explore charging locations around Hyderabad and check station details before you travel.</p>
+    <p>
+      Explore charging locations around Hyderabad and check
+      station details before you travel.
+    </p>
   </section>
 
   <section class="filters">
-    <input id="search" type="search" placeholder="Search station, area or operator..." aria-label="Search stations">
+    <input
+      id="search"
+      type="search"
+      placeholder="Search station, area or operator..."
+      aria-label="Search stations"
+    >
+
     <select id="powerFilter" aria-label="Filter by charging power">
       <option value="all">All power levels</option>
       <option value="slow">Up to 22 kW</option>
@@ -52,7 +190,9 @@
     </select>
   </section>
 
-  <div class="summary" id="summary" aria-live="polite">Loading charging stations...</div>
+  <div class="summary" id="summary" aria-live="polite">
+    Loading charging stations...
+  </div>
 
   <main>
     <div id="map" aria-label="Map of EV charging stations in Hyderabad"></div>
@@ -60,10 +200,15 @@
   </main>
 
   <footer>
-    <strong>Important:</strong> Station details may be incomplete or outdated. Verify location, connectors, pricing and operating status with the operator before travelling. Map pins do not show live charger availability. Map data © OpenStreetMap contributors.
+    <strong>Important:</strong>
+    Station details may be incomplete or outdated. Verify location,
+    connectors, pricing and operating status with the operator before
+    travelling. Map pins do not show live charger availability.
+    Map data © OpenStreetMap contributors.
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   <script>
     const map = L.map('map').setView([17.385, 78.4867], 11);
 
@@ -73,6 +218,7 @@
     }).addTo(map);
 
     const markersLayer = L.layerGroup().addTo(map);
+
     let stations = [];
 
     const searchInput = document.getElementById('search');
@@ -81,26 +227,42 @@
     const summary = document.getElementById('summary');
 
     function showValue(value, fallback = 'Not verified') {
-      return value !== null && value !== undefined && value !== ''
-        ? String(value) : fallback;
+      return value !== null &&
+             value !== undefined &&
+             value !== ''
+        ? String(value)
+        : fallback;
     }
 
     function escapeHTML(value) {
       return String(value ?? '').replace(/[&<>"']/g, char => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;',
-        '"': '&quot;', "'": '&#39;'
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
       })[char]);
     }
 
     function hasCoordinates(station) {
-      if (station.latitude == null || station.longitude == null ||
-          station.latitude === '' || station.longitude === '') return false;
+      if (
+        station.latitude == null ||
+        station.longitude == null ||
+        station.latitude === '' ||
+        station.longitude === ''
+      ) {
+        return false;
+      }
 
       const lat = Number(station.latitude);
       const lon = Number(station.longitude);
 
-      return Number.isFinite(lat) && Number.isFinite(lon) &&
-        lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180;
+      return Number.isFinite(lat) &&
+             Number.isFinite(lon) &&
+             lat >= -90 &&
+             lat <= 90 &&
+             lon >= -180 &&
+             lon <= 180;
     }
 
     function renderStations() {
@@ -109,15 +271,25 @@
 
       const filtered = stations.filter(station => {
         const searchable = [
-          station.stationName, station.area, station.address,
-          station.operator, station.city
-        ].map(value => String(value ?? '')).join(' ').toLowerCase();
+          station.station_name,
+          station.area,
+          station.address,
+          station.operator,
+          station.city
+        ]
+          .map(value => String(value ?? ''))
+          .join(' ')
+          .toLowerCase();
 
-        const power = Number(station.maxPowerKW);
-        const hasPower = station.maxPowerKW != null &&
-          station.maxPowerKW !== '' && Number.isFinite(power);
+        const power = Number(station.max_power_kw);
 
-        const matchesPower = filter === 'all' ||
+        const hasPower =
+          station.max_power_kw != null &&
+          station.max_power_kw !== '' &&
+          Number.isFinite(power);
+
+        const matchesPower =
+          filter === 'all' ||
           (filter === 'slow' && hasPower && power <= 22) ||
           (filter === 'fast' && hasPower && power > 22);
 
@@ -126,49 +298,116 @@
 
       stationList.replaceChildren();
       markersLayer.clearLayers();
+
       let mappedCount = 0;
 
       filtered.forEach(station => {
-        const power = Number(station.maxPowerKW);
-        const hasPower = station.maxPowerKW != null &&
-          station.maxPowerKW !== '' && Number.isFinite(power);
+        const power = Number(station.max_power_kw);
 
-        const contacts = Array.isArray(station.contactNumbers)
-          ? station.contactNumbers : [];
-        const connectors = Array.isArray(station.connectorTypes)
-          ? station.connectorTypes : [];
+        const hasPower =
+          station.max_power_kw != null &&
+          station.max_power_kw !== '' &&
+          Number.isFinite(power);
 
-        const sourceURL = typeof station.sourceURL === 'string' &&
-          /^https?:\/\//i.test(station.sourceURL) ? station.sourceURL : '';
+        const connectors = Array.isArray(station.connectors)
+          ? station.connectors
+          : [];
+
+        const contact = station.contact_number || 'Not listed';
+
+        const sourceURL =
+          typeof station.source_url === 'string' &&
+          /^https?:\/\//i.test(station.source_url)
+            ? station.source_url
+            : '';
 
         const card = document.createElement('article');
         card.className = 'station';
 
         card.innerHTML = `
-          <h3>${escapeHTML(showValue(station.stationName, 'Unnamed station'))}</h3>
-          <span class="power">${hasPower ? escapeHTML(power + ' kW max listed') : 'Power not verified'}</span>
-          <p><strong>Area:</strong> ${escapeHTML(showValue(station.area))}</p>
-          <p><strong>Address:</strong> ${escapeHTML(showValue(station.address))}</p>
-          <p><strong>Operator:</strong> ${escapeHTML(showValue(station.operator))}</p>
-          <p><strong>Connectors:</strong> ${escapeHTML(connectors.length ? connectors.join(', ') : 'Not verified')}</p>
-          <p><strong>Charging points:</strong> ${escapeHTML(showValue(station.totalChargers))}</p>
-          <p><strong>Cars charging at once:</strong> ${escapeHTML(showValue(station.simultaneousChargingCapacity))}</p>
-          <p><strong>Price:</strong> ${station.pricePerKWh != null && station.pricePerKWh !== '' ? '₹' + escapeHTML(station.pricePerKWh) + '/kWh' : 'Not verified'}</p>
-          <p><strong>Contact:</strong> ${escapeHTML(contacts.length ? contacts.join(', ') : 'Not listed')}</p>
-          <p><strong>Verification:</strong> ${escapeHTML(showValue(station.verificationStatus))}</p>
-          ${sourceURL ? `<p><a href="${escapeHTML(sourceURL)}" target="_blank" rel="noopener noreferrer">View source listing ↗</a></p>` : ''}
-          <p class="notice">Confirm station details with the operator before travelling. Live availability is not provided.</p>
+          <h3>${escapeHTML(showValue(station.station_name, 'Unnamed station'))}</h3>
+
+          <span class="power">
+            ${hasPower
+              ? escapeHTML(power + ' kW max listed')
+              : 'Power not verified'}
+          </span>
+
+          <p><strong>Area:</strong>
+            ${escapeHTML(showValue(station.area))}
+          </p>
+
+          <p><strong>Address:</strong>
+            ${escapeHTML(showValue(station.address))}
+          </p>
+
+          <p><strong>Operator:</strong>
+            ${escapeHTML(showValue(station.operator))}
+          </p>
+
+          <p><strong>Connectors:</strong>
+            ${escapeHTML(
+              connectors.length
+                ? connectors.join(', ')
+                : 'Not verified'
+            )}
+          </p>
+
+          <p><strong>Charging points:</strong>
+            ${escapeHTML(showValue(station.charging_points))}
+          </p>
+
+          <p><strong>Cars charging at once:</strong>
+            Not verified
+          </p>
+
+          <p><strong>Price:</strong>
+            ${
+              station.price_per_kwh_inr != null &&
+              station.price_per_kwh_inr !== ''
+                ? '₹' + escapeHTML(station.price_per_kwh_inr) + '/kWh'
+                : 'Not verified'
+            }
+          </p>
+
+          <p><strong>Contact:</strong>
+            ${escapeHTML(contact)}
+          </p>
+
+          <p><strong>Availability:</strong>
+            ${escapeHTML(showValue(station.availability, 'Unknown'))}
+          </p>
+
+          <p><strong>Verification:</strong>
+            ${escapeHTML(showValue(station.verification_status))}
+          </p>
+
+          ${
+            sourceURL
+              ? `<p><a href="${escapeHTML(sourceURL)}"
+                    target="_blank"
+                    rel="noopener noreferrer">View source listing ↗</a></p>`
+              : ''
+          }
+
+          <p class="notice">
+            Confirm station details with the operator before travelling.
+            Live availability is not provided.
+          </p>
         `;
 
         stationList.appendChild(card);
 
         if (hasCoordinates(station)) {
           const marker = L.marker([
-            Number(station.latitude), Number(station.longitude)
+            Number(station.latitude),
+            Number(station.longitude)
           ]).bindPopup(
-            `<strong>${escapeHTML(showValue(station.stationName))}</strong><br>` +
+            `<strong>${escapeHTML(showValue(station.station_name))}</strong><br>` +
             `${escapeHTML(showValue(station.area))}<br>` +
-            `${hasPower ? escapeHTML(power + ' kW') : 'Power not verified'}`
+            `${hasPower
+              ? escapeHTML(power + ' kW')
+              : 'Power not verified'}`
           );
 
           marker.addTo(markersLayer);
@@ -177,21 +416,31 @@
       });
 
       summary.textContent =
-        `${filtered.length} station listing(s) shown · ${mappedCount} with map coordinates`;
+        `${filtered.length} station listing(s) shown · ` +
+        `${mappedCount} with map coordinates`;
 
       if (filtered.length === 0) {
-        stationList.innerHTML =
-          '<article class="station"><h3>No matching stations</h3><p>Try a different search or power filter.</p></article>';
+        stationList.innerHTML = `
+          <article class="station">
+            <h3>No matching stations</h3>
+            <p>Try a different search or power filter.</p>
+          </article>
+        `;
       }
     }
 
     fetch('./stations.json')
       .then(response => {
-        if (!response.ok) throw new Error('Could not load stations.json');
+        if (!response.ok) {
+          throw new Error('Could not load stations.json');
+        }
+
         return response.json();
       })
       .then(data => {
-        if (!Array.isArray(data)) throw new Error('Expected a JSON array');
+        if (!Array.isArray(data)) {
+          throw new Error('Expected a JSON array');
+        }
 
         stations = data;
         renderStations();
@@ -199,26 +448,37 @@
         const coordinates = stations
           .filter(hasCoordinates)
           .map(station => [
-            Number(station.latitude), Number(station.longitude)
+            Number(station.latitude),
+            Number(station.longitude)
           ]);
 
         if (coordinates.length > 0) {
-          map.fitBounds(coordinates, { padding: [25, 25], maxZoom: 14 });
+          map.fitBounds(coordinates, {
+            padding: [25, 25],
+            maxZoom: 14
+          });
         }
       })
       .catch(error => {
         summary.textContent = 'Station data could not be loaded.';
+
         stationList.innerHTML = `
           <article class="station">
             <h3>Could not load station data</h3>
-            <p>Check that <strong>stations.json</strong> is committed to the same repository folder as <strong>index.html</strong>.</p>
+            <p>
+              Check that <strong>stations.json</strong> is committed
+              to the same repository folder as <strong>index.html</strong>.
+            </p>
             <p>Also confirm that the JSON file contains a valid JSON array.</p>
-          </article>`;
+          </article>
+        `;
+
         console.error(error);
       });
 
     searchInput.addEventListener('input', renderStations);
     powerFilter.addEventListener('change', renderStations);
   </script>
+
 </body>
 </html>
